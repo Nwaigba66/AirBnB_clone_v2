@@ -10,30 +10,6 @@ from fabric.api import local, env, put, run
 env.hosts = ["100.25.34.211", "18.206.206.33"]
 
 
-def do_pack():
-    """
-    Creates a .tgz archive of web_static/ & stores it in versions/
-    """
-    try:
-        # create dir "versions" if it doesn't exist already
-        local("mkdir -p versions")
-
-        # create the name of the archive matching the template:
-        # web_static_<year><month><day><hour><minute><second>.tgz
-        current_time = datetime.now()
-        date_stamp = current_time.strftime("%Y%m%d%H%M%S")
-        archive_name = "web_static_" + date_stamp
-        full_archive_path = "versions/" + archive_name + ".tgz"
-
-        # create the archive
-        local("tar -czvf " + full_archive_path + " web_static")
-
-        return full_archive_path
-
-    except Exception:
-        return None
-
-
 def do_deploy(archive_path):
     """
     Sends archive to all web servers
