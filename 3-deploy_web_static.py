@@ -65,11 +65,12 @@ def do_deploy(archive_path):
         # move all the content from inner web_static dir
         # into outer and delete the empty inner dir
         inner_dir = unarchive_dir + "/web_static"
-        run("rsync -av " + inner_dir + "/* " + unarchive_dir)
+        run("rsync -a " + inner_dir + "/* " + unarchive_dir)
         run("rm -rf " + inner_dir)
 
         # delete and re-establish symlink to /data/web_static/current/ dir
-        run("ln -sfn " + unarchive_dir + " " + "/data/web_static/current")
+        run("rm -rf /data/web_static/current")
+        run("ln -s " + unarchive_dir + " " + "/data/web_static/current")
 
         return True
 
