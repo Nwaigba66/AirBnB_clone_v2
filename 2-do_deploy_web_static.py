@@ -7,7 +7,9 @@ from datetime import datetime
 from fabric.api import local, env, put, run
 
 # list of servers
-env.hosts = ["100.25.34.211", "18.206.206.33"]
+env.hosts = ["54.237.24.119", "34.229.255.253"]
+env.key_filename = '~/.ssh/id_rsa'
+env.user = 'ubuntu'
 
 
 def do_deploy(archive_path):
@@ -49,5 +51,6 @@ def do_deploy(archive_path):
 
         return True
 
-    except Exception:
+    except Exception as e:
+        print(e)
         return False
