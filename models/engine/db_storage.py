@@ -29,7 +29,8 @@ class DBStorage:
 
         # create the engine
         self.__engine = create_engine(
-            f'mysql+mysqldb://{user}:{pwd}@{host}/{db}',
+            'mysql+mysqldb://{}:{}@{}/{}'
+            .format(user, pwd, host, db),
             pool_pre_ping=True)
 
         if getenv("HBNB_ENV ") == "test":
@@ -55,14 +56,16 @@ class DBStorage:
                 # key: <class-name>.<object-id>
                 # value: object
                 for object in objects:
-                    key = f"{object.__class__.__name__}.{object.id}"
+                    key = "{}.{}".format(object.__class__.__name__,
+                                         object.id)
                     dictionary[key] = object
         else:
             # query to return all objects of the type, cls in the db
             objects = self.__session.query(cls).all()
 
             for object in objects:
-                key = f"{object.__class__.__name__}.{object.id}"
+                key = "{}.{}".format(object.__class__.__name__,
+                                     object.id)
                 dictionary[key] = object
 
         return dictionary
@@ -89,3 +92,7 @@ class DBStorage:
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session()
+
+    def close(self):
+        """ Calls remove() on private session attribute """
+        self.__session.close()
