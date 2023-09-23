@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AirBnB Clone</title>
+    <link rel="stylesheet" href="static/styles/4-common.css">
+    <link rel="stylesheet" href="static/styles/3-header.css">
+    <link rel="stylesheet" href="static/styles/3-footer.css">
+    <link rel="stylesheet" href="static/styles/6-filters.css">
+    <link rel="stylesheet" href="static/styles/8-places.css">
+    <link rel="icon" type="image/png" href="static/images/icon.png">
+</head>
+
+<body>
+    <header>
+        <div class="logo"></div>
+    </header>
+    <div class="container">
+        <section class="filters">
+            <div class="locations-filter">
+                <h3>States</h3>
+                <h4>&nbsp;</h4>
+                <ul class="popover">
+                    {% for state in states %}
+                    <li>
+                        <h2>{{ state.name }}:</h2>
+                        <ul>
+                            {% for city in state.cities %}
+                            <li>{{ city.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="amenities-filter">
+                <h3>Amenities</h3>
+                <h4>&nbsp;</h4>
+                <ul class="popover">
+                    {% for amenity in amenities %}
+                    <li>{{ amenity.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <button>Search</button>
+        </section>
+        <section class="places">
+            <h1>Places</h1>
+            <div class="places-list">
+                {% for place in places %}
+                <article>
+                    <div class="places-heading">
+                        <h2>{{ place.name }}</h2>
+                        <div class="price_by_night">${{ place.price_by_night }}</div>
+                    </div>
+                    <div class="information">
+                        <div class="max_guest">
+                            <div class="guest-icon"></div>
+                            <p>{{ place.max_guest }} Guests</p>
+                        </div>
+                        <div class="number_rooms">
+                            <div class="bedroom-icon"></div>
+                            <p>{{ place.number_rooms }} Bedroom</p>
+                        </div>
+                        <div class="number_bathrooms">
+                            <div class="bathroom-icon"></div>
+                            <p>{{ place.number_bathrooms }} Bathroom</p>
+                        </div>
+                    </div>
+                    <div class="user">
+                        <p><span class="bold-text">Owner:</span> {{ place.owner }}</p>
+                    </div>
+                    <div class="description">{{ place.description | safe }}</div>
+                    <div class="amenities"></div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+    <footer>
+        <span>Best School</span>
+    </footer>
+</body>
+
+</html>
