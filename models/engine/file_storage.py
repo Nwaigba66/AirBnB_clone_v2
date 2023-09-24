@@ -66,3 +66,7 @@ class FileStorage:
             # delete the object if it exists in the __objects list
             if key in self.__objects:
                 del self.__objects[key]
+
+    def close(self):
+        """ Calls reload() for deserializing JSON file to objects """
+        self.reload()

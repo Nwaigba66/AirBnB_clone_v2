@@ -18,7 +18,7 @@ class State(BaseModel, Base):
     if getenv("HBNB_TYPE_STORAGE") == "db":
         cities = relationship("City", backref="state", cascade="all, delete")
 
-    elif getenv("HBNB_TYPE_STORAGE") == "file":
+    elif getenv("HBNB_TYPE_STORAGE") == "fs":
         @property
         def cities(self):
             """Getter for cities of this state saved in FileStorage"""
